@@ -20,6 +20,9 @@ namespace LibraryManagement.Infrastructure.Configurations
           .IsRequired()
           .HasMaxLength(50);
 
+      builder.HasIndex(b => b.ISBN)
+          .IsUnique();
+
       builder.Property(b => b.PublishedDate)
           .IsRequired();
 
@@ -27,8 +30,9 @@ namespace LibraryManagement.Infrastructure.Configurations
           .IsRequired();
 
       builder.HasOne(b => b.Author)
-          .WithMany(a => a.Books)
-          .HasForeignKey(b => b.AuthorId);
+     .WithMany(a => a.Books)
+     .HasForeignKey(b => b.AuthorId)
+     .OnDelete(DeleteBehavior.Restrict);
     }
   }
 }

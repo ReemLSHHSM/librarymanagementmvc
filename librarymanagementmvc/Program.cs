@@ -1,3 +1,6 @@
+using LibraryManagement.Application;
+using LibraryManagement.Infrastructure;
+
 namespace librarymanagementmvc
 {
   public class Program
@@ -8,6 +11,10 @@ namespace librarymanagementmvc
 
       // Add services to the container.
       builder.Services.AddControllersWithViews();
+
+      builder.Services.AddApplication();
+      builder.Services.AddInfrastructure(builder.Configuration);
+
 
       var app = builder.Build();
 
