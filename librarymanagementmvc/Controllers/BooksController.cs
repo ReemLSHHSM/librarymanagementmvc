@@ -1,6 +1,7 @@
 using LibraryManagement.Application.Features.Authors;
 using LibraryManagement.Application.Features.Books.Command.CreateBook;
 using LibraryManagement.Application.Features.Books.DTOs;
+using LibraryManagement.Application.Features.Books.Queries.GetAllBooks;
 using LibraryManagement.MVC.Models.Books;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -83,7 +84,54 @@ namespace LibraryManagement.MVC.Controllers
 
       TempData["SuccessMessage"] = "Book created successfully.";
 
-      return RedirectToAction(nameof(Create));
+      return RedirectToAction(nameof(Index));
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> Index(
+    CancellationToken cancellationToken)
+    {
+      var books = await _sender.Send(
+          new GetAllBooksQuery(),
+          cancellationToken);
+
+      var model = new GetAllBooksViewModel
+      {
+        Books = books.Select(b => new BookListItemViewModel
+        {
+          Id = b.Id,
+          Title = b.Title,
+          ISBN = b.ISBN,
+          AuthorName = b.AuthorName,
+          PublishedDate = b.PublishedDate,
+          IsAvailable = b.IsAvailable
+        }).ToList()
+      };
+
+      return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(
+    int id,
+    CancellationToken cancellationToken)
+    {
+      var book = await _sender.Send(
+          new GetBookByIdQuery(id),
+          cancellationToken);
+
+      var model = new BookListItemViewModel
+      {
+        Id = book.Id,
+        Title = book.Title,
+        ISBN = book.ISBN,
+        PublishedDate = book.PublishedDate,
+        AuthorName = book.AuthorName,
+        IsAvailable = book.IsAvailable
+      };
+
+      return View(model);
     }
 
     private async Task LoadAuthorsAsync(

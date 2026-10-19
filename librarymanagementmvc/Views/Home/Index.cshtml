@@ -1,8 +1,79 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="mb-4">
+    <h1 class="fw-bold">Library Dashboard</h1>
+    <p class="text-muted">
+        Manage your books, authors, borrowers, and loans.
+    </p>
+</div>
+
+<div class="row g-4 mb-4">
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Total Books</h6>
+                <h2 class="fw-bold">120</h2>
+                <a asp-controller="Books"
+                   asp-action="Index"
+                   class="text-decoration-none">
+                    View Books →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Authors</h6>
+                <h2 class="fw-bold">25</h2>
+                <span class="text-muted">Registered authors</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Borrowers</h6>
+                <h2 class="fw-bold">60</h2>
+                <span class="text-muted">Registered borrowers</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h6 class="text-muted">Active Loans</h6>
+                <h2 class="fw-bold">15</h2>
+                <span class="text-muted">Books currently borrowed</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Quick Actions</h5>
+    </div>
+
+    <div class="card-body">
+        <a asp-controller="Books"
+           asp-action="Create"
+           class="btn btn-primary me-2">
+            Add New Book
+        </a>
+
+        <a asp-controller="Books"
+           asp-action="Index"
+           class="btn btn-outline-primary">
+            View All Books
+        </a>
+    </div>
 </div>

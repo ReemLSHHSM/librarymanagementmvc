@@ -9,10 +9,11 @@ namespace librarymanagementmvc
     {
       var builder = WebApplication.CreateBuilder(args);
 
-      builder.Services.AddControllersWithViews();
 
       builder.Services.AddApplication();
       builder.Services.AddInfrastructure(builder.Configuration);
+
+      builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 
       var app = builder.Build();

@@ -1,0 +1,81 @@
+
+@model LibraryManagement.MVC.Models.Books.BookListItemViewModel
+
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Book Details</h1>
+
+        <a asp-controller="Books"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Back to Books
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+            <h4 class="mb-0">@Model.Title</h4>
+        </div>
+
+        <div class="card-body">
+            <dl class="row">
+
+                <dt class="col-sm-3">Book ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3">Title</dt>
+                <dd class="col-sm-9">@Model.Title</dd>
+
+                <dt class="col-sm-3">ISBN</dt>
+                <dd class="col-sm-9">@Model.ISBN</dd>
+
+                <dt class="col-sm-3">Author</dt>
+                <dd class="col-sm-9">@Model.AuthorName</dd>
+
+                <dt class="col-sm-3">Published Date</dt>
+                <dd class="col-sm-9">
+                    @Model.PublishedDate.ToString("yyyy-MM-dd")
+                </dd>
+
+                <dt class="col-sm-3">Availability</dt>
+                <dd class="col-sm-9">
+                    @if (Model.IsAvailable)
+                    {
+                        <span class="badge bg-success">
+                            Available
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">
+                            Borrowed
+                        </span>
+                    }
+                </dd>
+
+            </dl>
+        </div>
+
+        <div class="card-footer">
+            <a asp-controller="Books"
+               asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn btn-warning">
+                Edit Book
+            </a>
+
+            <a asp-controller="Books"
+               asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+    </div>
+</div>
