@@ -48,7 +48,7 @@ namespace LibraryManagement.Application.Features.Books.Command.CreateBook
 
       var book = new Book
       {
-        Title = dto.Title.Trim(),
+        Title = dto.Title,
         ISBN = isbn,
         PublishedDate = dto.PublishedDate,
         AuthorId = author.Id
