@@ -23,6 +23,9 @@ namespace LibraryManagement.Infrastructure.Configurations
       builder.Property(u => u.PasswordHash)
           .IsRequired();
 
+      builder.HasIndex(u => u.Email)
+    .IsUnique();
+
       builder.Property(u => u.Role)
           .IsRequired()
           .HasMaxLength(50);
