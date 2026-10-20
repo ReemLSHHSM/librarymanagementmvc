@@ -1,5 +1,6 @@
 using LibraryManagement.Application.Features.Authors;
 using LibraryManagement.Application.Features.Books.Command.CreateBook;
+using LibraryManagement.Application.Features.Books.Command.UpdateBook;
 using LibraryManagement.Application.Features.Books.DTOs;
 using LibraryManagement.Application.Features.Books.Queries.GetAllBooks;
 using LibraryManagement.MVC.Models.Books;
@@ -22,7 +23,7 @@ namespace LibraryManagement.MVC.Controllers
     public async Task<IActionResult> Create(
         CancellationToken cancellationToken)
     {
-      var model = new CreateBookViewModel();
+      var model = new BookFormViewModel();
 
       await LoadAuthorsAsync(model, cancellationToken);
 
@@ -32,7 +33,7 @@ namespace LibraryManagement.MVC.Controllers
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(
-        CreateBookViewModel model,
+        BookFormViewModel model,
         CancellationToken cancellationToken)
     {
       if (string.IsNullOrWhiteSpace(model.Title))
@@ -134,8 +135,66 @@ namespace LibraryManagement.MVC.Controllers
       return View(model);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> UpdateBook(
+    int id,
+    CancellationToken cancellationToken)
+    {
+      var book = await _sender.Send(
+          new GetBookByIdQuery(id),
+          cancellationToken);
+
+      if (book is null)
+      {
+        return NotFound();
+      }
+
+      var model = new BookFormViewModel
+      {
+        Id = book.Id,
+        Title = book.Title,
+        ISBN = book.ISBN,
+        PublishedDate = book.PublishedDate,
+        AuthorId = book.AuthorId
+      };
+
+      await LoadAuthorsAsync(model, cancellationToken);
+
+      return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+
+    public async Task<IActionResult> UpdateBook(
+        BookFormViewModel model,
+        CancellationToken cancellationToken)
+    {
+      if (!ModelState.IsValid)
+      {
+        await LoadAuthorsAsync(model, cancellationToken);
+        return View(model);
+      }
+      var dto = new UpdateBookDto
+      {
+        Id = (int)model.Id,
+        Title = model.Title,
+        ISBN = model.ISBN,
+        PublishedDate = (DateOnly)model.PublishedDate,
+        AuthorId = (int)model.AuthorId
+      };
+
+      var command = new UpdateBookCommand(dto);
+
+      await _sender.Send(command, cancellationToken);
+
+      TempData["SuccessMessage"] = "Book updated successfully.";
+
+      return RedirectToAction(nameof(Index));
+    }
+
     private async Task LoadAuthorsAsync(
-        CreateBookViewModel model,
+        BookFormViewModel model,
         CancellationToken cancellationToken)
     {
       var authors = await _sender.Send(

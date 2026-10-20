@@ -1,3 +1,5 @@
+@model LibraryManagement.MVC.Models.DashboardStats.DashboardStatsViewModel
+
 
 @{
     ViewData["Title"] = "Dashboard";
@@ -16,7 +18,7 @@
         <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
                 <h6 class="text-muted">Total Books</h6>
-                <h2 class="fw-bold">120</h2>
+                <h2 class="fw-bold">@Model.TotalBooks</h2>
                 <a asp-controller="Books"
                    asp-action="Index"
                    class="text-decoration-none">
@@ -30,7 +32,7 @@
         <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
                 <h6 class="text-muted">Authors</h6>
-                <h2 class="fw-bold">25</h2>
+                <h2 class="fw-bold">@Model.TotalAuthors</h2>
                 <span class="text-muted">Registered authors</span>
             </div>
         </div>
@@ -40,7 +42,7 @@
         <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
                 <h6 class="text-muted">Borrowers</h6>
-                <h2 class="fw-bold">60</h2>
+                <h2 class="fw-bold">@Model.TotalBorrowers</h2>
                 <span class="text-muted">Registered borrowers</span>
             </div>
         </div>
@@ -50,7 +52,7 @@
         <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
                 <h6 class="text-muted">Active Loans</h6>
-                <h2 class="fw-bold">15</h2>
+                <h2 class="fw-bold">@Model.ActiveLoans</h2>
                 <span class="text-muted">Books currently borrowed</span>
             </div>
         </div>
