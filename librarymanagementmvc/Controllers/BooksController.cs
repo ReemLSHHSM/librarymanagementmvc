@@ -1,5 +1,6 @@
 using LibraryManagement.Application.Features.Authors;
 using LibraryManagement.Application.Features.Books.Command.CreateBook;
+using LibraryManagement.Application.Features.Books.Command.DeleteBook;
 using LibraryManagement.Application.Features.Books.Command.UpdateBook;
 using LibraryManagement.Application.Features.Books.DTOs;
 using LibraryManagement.Application.Features.Books.Queries.GetAllBooks;
@@ -189,6 +190,21 @@ namespace LibraryManagement.MVC.Controllers
       await _sender.Send(command, cancellationToken);
 
       TempData["SuccessMessage"] = "Book updated successfully.";
+
+      return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(
+    int id,
+    CancellationToken cancellationToken)
+    {
+      await _sender.Send(
+          new DeleteBookCommand(id),
+          cancellationToken);
+
+      TempData["SuccessMessage"] = "Book deleted successfully.";
 
       return RedirectToAction(nameof(Index));
     }

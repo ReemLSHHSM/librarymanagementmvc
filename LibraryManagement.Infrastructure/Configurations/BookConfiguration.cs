@@ -32,7 +32,7 @@ namespace LibraryManagement.Infrastructure.Configurations
       builder.HasOne(b => b.Author)
      .WithMany(a => a.Books)
      .HasForeignKey(b => b.AuthorId)
-     .OnDelete(DeleteBehavior.Restrict);
+     .OnDelete(DeleteBehavior.Cascade);
     }
   }
 }

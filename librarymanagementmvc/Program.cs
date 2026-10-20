@@ -15,7 +15,6 @@ namespace librarymanagementmvc
 
       builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-
       var app = builder.Build();
 
       if (!app.Environment.IsDevelopment())
