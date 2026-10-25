@@ -28,6 +28,7 @@ namespace LibraryManagement.Infrastructure.Configurations
 
       builder.Property(u => u.Role)
           .IsRequired()
+          .HasConversion<string>()
           .HasMaxLength(50);
 
       builder.HasOne(u => u.Borrower)

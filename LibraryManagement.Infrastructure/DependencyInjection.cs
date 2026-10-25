@@ -1,4 +1,5 @@
 using LibraryManagement.Application.Common.Interfaces;
+using LibraryManagement.Infrastructure.Authentication;
 using LibraryManagement.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,8 @@ namespace LibraryManagement.Infrastructure
 
       services.AddScoped<IApplicationDbContext>(provider =>
           provider.GetRequiredService<ApplicationDbContext>());
+
+      services.AddScoped<IPasswordHasher, PasswordHasher>();
 
       return services;
     }
