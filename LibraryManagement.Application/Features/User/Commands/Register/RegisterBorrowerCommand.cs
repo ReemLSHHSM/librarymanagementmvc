@@ -11,24 +11,28 @@ namespace LibraryManagement.Application.Features.User.Commands.Register
     string Email,
     string Phone,
     string Password
-) : IRequest<int>;
+) : IRequest<string>;
 
   public class RegisterBorrowerCommandHandler
-      : IRequestHandler<RegisterBorrowerCommand, int>
+      : IRequestHandler<RegisterBorrowerCommand, string>
   {
 
     private readonly IApplicationDbContext _context;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IJwtTokenGenerator _jwtTokenGenerator;
+
 
     public RegisterBorrowerCommandHandler(
         IApplicationDbContext context,
-        IPasswordHasher passwordHasher)
+        IPasswordHasher passwordHasher,
+        IJwtTokenGenerator jwtTokenGenerator)
     {
       _context = context;
       _passwordHasher = passwordHasher;
+      _jwtTokenGenerator = jwtTokenGenerator;
     }
 
-    public async Task<int> Handle(RegisterBorrowerCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(RegisterBorrowerCommand request, CancellationToken cancellationToken)
     {
       var emailExists = await _context.Users
           .AnyAsync(u => u.Email == request.Email, cancellationToken);
@@ -59,7 +63,10 @@ namespace LibraryManagement.Application.Features.User.Commands.Register
 
       await _context.SaveChangesAsync(cancellationToken);
 
-      return user.Id;
+      var token = _jwtTokenGenerator.GenerateToken(user);
+
+
+      return token;
     }
   }
 }

@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Features\User\DTO\" />
-    <Folder Include="Features\User\NewFolder\" />
     <Folder Include="Features\Authors\Command\" />
   </ItemGroup>
 

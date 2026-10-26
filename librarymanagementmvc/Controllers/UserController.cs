@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagement.MVC.Controllers;
 
-public class AccountController : Controller
+public class UserController : Controller
 {
   private readonly ISender _sender;
 
-  public AccountController(ISender sender)
+  public UserController(ISender sender)
   {
     _sender = sender;
   }
@@ -43,7 +43,6 @@ public class AccountController : Controller
     {
       await _sender.Send(command, cancellationToken);
 
-      //return RedirectToAction("Login", "Account");
       TempData["SuccessMessage"] = "Account registered successfully!";
       return RedirectToAction("Index", "Dashboard");
     }
